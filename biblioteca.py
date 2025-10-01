@@ -1,11 +1,34 @@
 def carica_da_file(file_path):
     """Carica i libri dal file"""
     # TODO
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            biblioteca = list()
+            sezioni_max = list()
 
+            for riga in file:
+                if riga.startswith('5'):
+                    sezioni_max.append(int(riga))
+                else:
+                    campi = file.rstrip('\n').split(',')
+                    diz = {
+                        'titolo' : campi[0],
+                        'autore' : campi[1],
+                        'anno' : int(campi[2]),
+                        'pagine' : int(campi[3]),
+                        'sezione' : int(campi[4]),
+                    }
+                    biblioteca.append(diz)
+    except FileNotFoundError:
+        biblioteca = None
+    return biblioteca
 
 def aggiungi_libro(biblioteca, titolo, autore, anno, pagine, sezione, file_path):
     """Aggiunge un libro nella biblioteca"""
     # TODO
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write(titolo + '\n')
+        file.write(autore + '\n')
 
 
 def cerca_libro(biblioteca, titolo):
